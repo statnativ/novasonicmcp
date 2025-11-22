@@ -1,4 +1,4 @@
-import {
+﻿import {
   BedrockRuntimeClient,
   InvokeModelWithBidirectionalStreamCommand,
 } from "@aws-sdk/client-bedrock-runtime";
@@ -18,8 +18,8 @@ import { ToolHandler } from "../services/tools";
 import { EventManager } from "./events";
 
 /**
- * Nova Sonic 双向流客户端
- * 负责管理音频流会话、工具调用和事件处理
+ * Nova Sonic Bidirectional Stream Client
+ * Manages audio stream sessions, tool calls, and event handling
  */
 export class NovaSonicBidirectionalStreamClient {
   private bedrockRuntimeClient: BedrockRuntimeClient;
@@ -34,7 +34,7 @@ export class NovaSonicBidirectionalStreamClient {
     config: NovaSonicBidirectionalStreamClientConfig,
     toolHandler?: ToolHandler
   ) {
-    // 初始化 HTTP2 处理器
+    // Initialize HTTP2 handler
     const nodeHttp2Handler = new NodeHttp2Handler({
       requestTimeout: 300000,
       sessionTimeout: 600000,
@@ -44,10 +44,10 @@ export class NovaSonicBidirectionalStreamClient {
     });
 
     if (!config.clientConfig.credentials) {
-      throw new Error("未提供凭证");
+      throw new Error("No credentials provided");
     }
 
-    // 初始化 Bedrock 运行时客户端
+    // Initialize Bedrock runtime client
     this.bedrockRuntimeClient = new BedrockRuntimeClient({
       ...config.clientConfig,
       credentials: config.clientConfig.credentials,
@@ -66,7 +66,7 @@ export class NovaSonicBidirectionalStreamClient {
   }
 
   /**
-   * 检查会话是否活跃
+   * Check if session is active
    */
   public isSessionActive(sessionId: string): boolean {
     const session = this.activeSessions.get(sessionId);
@@ -74,35 +74,35 @@ export class NovaSonicBidirectionalStreamClient {
   }
 
   /**
-   * 获取所有活跃会话ID
+   * Get all active session IDs
    */
   public getActiveSessions(): string[] {
     return Array.from(this.activeSessions.keys());
   }
 
   /**
-   * 获取会话最后活动时间
+   * Get session last activity time
    */
   public getLastActivityTime(sessionId: string): number {
     return this.sessionLastActivity.get(sessionId) || 0;
   }
 
   /**
-   * 更新会话活动时间
+   * Update session activity time
    */
   private updateSessionActivity(sessionId: string): void {
     this.sessionLastActivity.set(sessionId, Date.now());
   }
 
   /**
-   * 检查会话清理是否在进行
+   * Check if session cleanup is in progress
    */
   public isCleanupInProgress(sessionId: string): boolean {
     return this.sessionCleanupInProgress.has(sessionId);
   }
 
   /**
-   * 创建新的流会话
+   * Create new stream session
    */
   public createStreamSession(
     sessionId: string = randomUUID(),
@@ -146,7 +146,7 @@ export class NovaSonicBidirectionalStreamClient {
     try {
       this.setupSessionStartEvent(sessionId);
       const asyncIterable = this.createSessionAsyncIterable(sessionId);
-      console.log(`启动会话 ${sessionId} 的双向流...`);
+      console.log(`Starting bidirectional stream for session...`);
 
       const response = await this.bedrockRuntimeClient.send(
         new InvokeModelWithBidirectionalStreamCommand({
@@ -155,7 +155,7 @@ export class NovaSonicBidirectionalStreamClient {
         })
       );
 
-      console.log(`会话 ${sessionId} 流建立成功,开始处理响应...`);
+      console.log(`会话 ${sessionId} stream established, processing response...`);
       await this.processResponseStream(sessionId, response);
     } catch (error) {
       console.error(`会话 ${sessionId} 出错:`, error);
@@ -222,7 +222,7 @@ export class NovaSonicBidirectionalStreamClient {
 
     return {
       [Symbol.asyncIterator]: () => {
-        console.log(`请求会话 ${sessionId} 的异步迭代器`);
+        console.log(`Requesting async iterator for session`);
 
         return {
           next: async () => {
@@ -467,7 +467,7 @@ export class NovaSonicBidirectionalStreamClient {
    * 处理流错误
    */
   private handleStreamError(sessionId: string, error: any): void {
-    console.error(`处理会话 ${sessionId} 的响应流时出错:`, error);
+    console.error(`Error processing response stream for session:`, error);
     this.dispatchEvent(sessionId, "error", {
       source: "responseStream",
       message: "处理响应流时出错",
@@ -491,7 +491,7 @@ export class NovaSonicBidirectionalStreamClient {
    * 设置会话开始事件
    */
   private setupSessionStartEvent(sessionId: string): void {
-    console.log(`设置会话 ${sessionId} 的初始事件...`);
+    console.log(`Setting initial event for session...`);
     const session = this.activeSessions.get(sessionId);
     if (!session) return;
 
@@ -744,3 +744,10 @@ export class NovaSonicBidirectionalStreamClient {
     }
   }
 }
+
+
+
+
+
+
+

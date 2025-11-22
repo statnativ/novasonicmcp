@@ -1,4 +1,4 @@
-import { spawn } from "child_process";
+﻿import { spawn } from "child_process";
 
 import fs from "fs";
 import os from "os";
@@ -68,3 +68,5 @@ function getResourcePath(): string {
   const appPath = process.env.APP_PATH || process.cwd();
   return path.join(appPath, "resources");
 }
+
+

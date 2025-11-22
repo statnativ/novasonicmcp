@@ -1,4 +1,4 @@
-import { Buffer } from "node:buffer";
+﻿import { Buffer } from "node:buffer";
 import { NovaSonicBidirectionalStreamClient } from "./client";
 import {
   DefaultAudioInputConfiguration,
@@ -184,3 +184,5 @@ export class StreamSession {
     console.log(`会话 ${this.sessionId} 已关闭`);
   }
 }
+
+

@@ -1,4 +1,4 @@
-import { fromIni } from "@aws-sdk/credential-providers";
+﻿import { fromIni } from "@aws-sdk/credential-providers";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { join } from "path";
 import { NovaSonicBidirectionalStreamClient } from "./core/client";
@@ -198,3 +198,5 @@ main().catch((err) => {
   console.error("Unhandled error in main:", err);
   process.exit(1);
 });
+
+

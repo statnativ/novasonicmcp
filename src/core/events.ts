@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+﻿import { randomUUID } from "node:crypto";
 import { McpTool, SessionData } from "../types/types";
 import { DefaultToolSchema, WeatherToolSchema } from "../config/consts";
 
@@ -30,7 +30,7 @@ export class EventManager {
     session: SessionData,
     audioOutputConfig: any
   ): object {
-    // 获取已注册的 MCP 工具
+    // 获取已Registering MCP tool
     const toolHandler = session.toolHandler;
     const mcpTools: Array<{ name: string; description: string; schema: any }> =
       [];
@@ -310,3 +310,5 @@ export class EventManager {
     ];
   }
 }
+
+

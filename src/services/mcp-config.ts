@@ -1,4 +1,4 @@
-import fs from "fs";
+﻿import fs from "fs";
 import path from "path";
 import os from "os";
 import { McpConfig } from "../types/types";
@@ -28,7 +28,7 @@ export class McpConfigLoader {
         try {
           const configContent = fs.readFileSync(configPath, "utf-8");
           const config = JSON.parse(configContent) as McpConfig;
-          console.log(`已从 ${configPath} 加载 MCP 配置`);
+          console.log(`Loaded MCP config from`);
           return config;
         } catch (error) {
           console.error(`加载 MCP 配置文件 ${configPath} 失败: ${error}`);
@@ -67,3 +67,5 @@ export class McpConfigLoader {
     }
   }
 }
+
+

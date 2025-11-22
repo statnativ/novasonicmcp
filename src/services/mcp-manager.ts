@@ -1,4 +1,4 @@
-import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+﻿import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
 import { ToolHandler } from "./tools";
@@ -22,7 +22,7 @@ export class McpManager {
    */
   async initializeServers(): Promise<void> {
     const servers = Object.entries(this.config.mcpServers);
-    console.log(`发现 ${servers.length} 个 MCP 服务器配置`);
+    console.log(`Found MCP server configs`);
 
     await Promise.all(
       servers.map(async ([serverName, serverConfig]) => {
@@ -30,7 +30,7 @@ export class McpManager {
           try {
             await this.connectToServer(serverName, serverConfig);
           } catch (error) {
-            console.error(`连接到 MCP 服务器 ${serverName} 失败: ${error}`);
+            console.error(`Failed to connect to MCP server: ${error}`);
           }
         } else {
           console.log(`MCP 服务器 ${serverName} 已禁用，跳过连接`);
@@ -46,7 +46,7 @@ export class McpManager {
     serverName: string,
     config: McpServerConfig
   ): Promise<McpTool[]> {
-    console.log(`正在连接 MCP 服务器: ${serverName}`);
+    console.log(`Connecting to MCP server: ${serverName}`);
 
     try {
       // 创建客户端
@@ -105,24 +105,24 @@ export class McpManager {
       // 保存工具列表
       this.tools.set(serverName, serverTools);
 
-      // 注册工具到 ToolHandler
+      // Registering MCP tool到 ToolHandler
       this.registerServerTools(
         serverName,
         serverTools,
         config.autoApprove || []
       );
 
-      console.log(`已连接到 MCP 服务器 ${serverName}，可用工具: ${serverTools.map(({ name }) => name).join(", ")}`);
+      console.log(`Connected to MCP server ${serverName}，available tools: ${serverTools.map(({ name }) => name).join(", ")}`);
 
       return serverTools;
     } catch (error) {
-      console.error(`连接到 MCP 服务器 ${serverName} 失败: ${error}`);
+      console.error(`Failed to connect to MCP server: ${error}`);
       throw error;
     }
   }
 
   /**
-   * 注册服务器工具到 ToolHandler
+   * Registering MCP tool到 ToolHandler
    */
   private registerServerTools(
     serverName: string,
@@ -130,7 +130,7 @@ export class McpManager {
     autoApproveList: string[]
   ): void {
     tools.forEach((tool) => {
-      // 修改: 默认所有工具都是自动批准的，不再根据 autoApproveList 判断
+      // 修改: 默认所有工具都是auto-approve的，不再根据 autoApproveList 判断
       const isAutoApproved = true;
       this.toolHandler.registerMcpTool(
         tool.name,
@@ -182,7 +182,7 @@ export class McpManager {
   }
 
   /**
-   * 获取所有可用工具
+   * 获取所有available tools
    */
   getAllTools(): McpTool[] {
     const allTools: McpTool[] = [];
@@ -224,3 +224,5 @@ export class McpManager {
     this.transports.clear();
   }
 }
+
+

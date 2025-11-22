@@ -1,4 +1,4 @@
-import axios from "axios";
+﻿import axios from "axios";
 import https from "https";
 import { WeatherParseResult } from "../types/types";
 
@@ -72,12 +72,12 @@ export class ToolHandler {
   }
 
   /**
-   * 注册 MCP 工具
+   * Registering MCP tool
    * @param toolName 工具名称
    * @param handler 处理函数
    * @param serverName 服务器名称
    * @param description 工具描述
-   * @param isAutoApproved 是否自动批准
+   * @param isAutoApproved 是否auto-approve
    */
   public registerMcpTool(
     toolName: string,
@@ -87,7 +87,7 @@ export class ToolHandler {
     isAutoApproved: boolean = false
   ): void {
     console.log(
-      `注册 MCP 工具: ${serverName}/${toolName} (自动批准: ${isAutoApproved})`
+      `Registering MCP tool: ${serverName}/${toolName} (auto-approve: ${isAutoApproved})`
     );
     this.mcpTools.set(toolName, {
       handler,
@@ -98,14 +98,14 @@ export class ToolHandler {
   }
 
   /**
-   * 获取所有已注册的 MCP 工具信息
+   * 获取所有已Registering MCP tool信息
    */
   public getRegisteredMcpTools(): Map<string, McpToolInfo> {
     return this.mcpTools;
   }
 
   /**
-   * 获取所有已注册的 MCP 工具名称
+   * 获取所有已Registering MCP tool名称
    */
   public getRegisteredMcpToolNames(): string[] {
     return Array.from(this.mcpTools.keys());
@@ -120,7 +120,7 @@ export class ToolHandler {
   }
 
   /**
-   * 检查工具是否自动批准
+   * 检查工具是否auto-approve
    */
   public isToolAutoApproved(toolName: string): boolean {
     const toolInfo = this.mcpTools.get(toolName);
@@ -217,3 +217,5 @@ export class ToolHandler {
     }
   }
 }
+
+

@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import http from "http";
 import path from "path";
 import { Server } from "socket.io";
@@ -60,24 +60,24 @@ const io = new Server(server, {
   transports: ["websocket", "polling"],
 });
 
-// 创建 ToolHandler
+// Create ToolHandler
 const toolHandler = new ToolHandler();
 
-// 创建 MCP 管理器
+// Create MCP manager
 const mcpManager = new McpManager(toolHandler);
 
-// 异步初始化 MCP 服务器
+// Async initialize MCP servers
 (async () => {
   try {
-    console.log("正在初始化 MCP 服务器...");
+    console.log("Initializing MCP servers...");
     await mcpManager.initializeServers();
-    console.log("MCP 服务器初始化完成");
+    console.log("MCP servers initialized");
   } catch (error) {
-    console.error("初始化 MCP 服务器失败:", error);
+    console.error("Failed to initialize MCP servers:", error);
   }
 })();
 
-// 创建 AWS Bedrock 客户端
+// Create AWS Bedrock client
 const bedrockClient = new NovaSonicBidirectionalStreamClient(
   {
     requestHandlerConfig: {
@@ -88,7 +88,7 @@ const bedrockClient = new NovaSonicBidirectionalStreamClient(
       credentials: fromIni({ profile: AWS_PROFILE_NAME }),
     },
   },
-  toolHandler // 传入 toolHandler
+  toolHandler // Pass in toolHandler
 );
 
 // Periodically check for and close inactive sessions (every minute)
@@ -222,20 +222,20 @@ io.on("connection", (socket) => {
       }
     });
 
-    // 处理语音配置事件
+    // Handle voice configuration event
     socket.on("voiceConfig", async (data) => {
       try {
         console.log("Voice configuration received:", data);
         if (data && data.voiceId) {
-          // 保存voiceId到会话中，以便在初始化时使用
+          // Save voiceId to session for use during initialization
           session.setVoiceId(data.voiceId);
           socket.emit("voiceConfigConfirmed", { voiceId: data.voiceId });
-          console.log(`Voice ID已更新为: ${data.voiceId}`);
+          console.log(`Voice ID updated to: ${data.voiceId}`);
         }
       } catch (error) {
-        console.error("处理语音配置时出错:", error);
+        console.error("Error processing voice configuration:", error);
         socket.emit("error", {
-          message: "处理语音配置时出错",
+          message: "Error processing voice configuration",
           details: error instanceof Error ? error.message : String(error),
         });
       }
@@ -387,8 +387,8 @@ process.on("SIGINT", async () => {
   }, 5000);
 
   try {
-    // 关闭 MCP 服务器连接
-    console.log("正在关闭 MCP 服务器连接...");
+    // Close MCP server connections
+    console.log("Closing MCP server connections...");
     await mcpManager.closeAll();
 
     // First close Socket.IO server which manages WebSocket connections
@@ -421,3 +421,5 @@ process.on("SIGINT", async () => {
     process.exit(1);
   }
 });
+
+

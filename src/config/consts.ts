@@ -1,4 +1,4 @@
-import { AudioType, AudioMediaType, TextMediaType } from "../types/types";
+﻿import { AudioType, AudioMediaType, TextMediaType } from "../types/types";
 
 export const DefaultInferenceConfiguration = {
   maxTokens: 1024,
@@ -50,3 +50,5 @@ export const DefaultAudioOutputConfiguration = {
   sampleRateHertz: 24000,
   voiceId: "tiffany",
 };
+
+

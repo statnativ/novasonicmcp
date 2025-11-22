@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Nova Sonic API主入口文件
  * 导出所有公共模块和组件
  */
@@ -32,3 +32,5 @@ export {
   DefaultSystemPrompt,
   DefaultAudioOutputConfiguration,
 } from "./config/consts";
+
+

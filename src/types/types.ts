@@ -1,4 +1,4 @@
-import { BedrockRuntimeClientConfig } from "@aws-sdk/client-bedrock-runtime";
+﻿import { BedrockRuntimeClientConfig } from "@aws-sdk/client-bedrock-runtime";
 import { NodeHttp2HandlerOptions } from "@smithy/node-http-handler";
 import { Provider } from "@smithy/types";
 import { Subject } from "rxjs";
@@ -76,3 +76,5 @@ export interface WeatherParseResult {
   latitude: number;
   longitude: number;
 }
+
+
